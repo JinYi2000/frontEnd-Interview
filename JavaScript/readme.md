@@ -285,6 +285,26 @@ function throttle(func, wait ,type) {
 ```
 # 冒泡和捕获
 冒泡是从内向外，捕获是从外向内。具体的可以看我博客：[关于事件冒泡和事件捕获](https://blog.csdn.net/qq_42532128/article/details/104123847)
+# 原生Ajax
+```js
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+  if(xhr.readyState == 4) {
+    if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304>) {
+      console.log(xhr.responseText);
+    } else {
+      console.error('error:::', xhr.status);
+    }
+  }
+};
+xhr.open("get", "demo.txt", true);
+xhr.setRequestHeader("MyHeader", "MyValue");
+xhr.send(null);
+```
+注意点：
+1. send()方法接收一个参数，作为请求主体发送的数据。如果不需要发送数据最好传入null，因为参数对有些浏览器来说是必须的
+2. 必须在调用open()之前指定onreadystatechange事件处理程序才能确保跨浏览器 兼容性
+3. 要成功发送请求头部信息，必须在调用open()方法之后且调用send()方法之前调用setRequestHeader()
 # 模块化
 ## CommonJs
 用于后端node和前端webpack
